@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const favoriteSchema = new mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   sport: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Sport',
@@ -16,16 +21,6 @@ const favoriteSchema = new mongoose.Schema({
       default: Date.now,
     },
   }],
-  restaurant: {
-    name: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String,
-      required: true,
-    },
-  },
 });
 
 const Favorite = mongoose.model('Favorite', favoriteSchema);

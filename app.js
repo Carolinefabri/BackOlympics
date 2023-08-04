@@ -19,13 +19,18 @@ require("./config")(app);
 
 // 👇 Start handling routes here
 const sportsRoutes = require('./routes/sports.routes');
-app.use('/api', sportsRoutes);
+app.use('/sports', sportsRoutes);
 
 const indexRoutes = require("./routes/index.routes");
 app.use("/api", indexRoutes);
 
 const authRoutes = require('./routes/auth.routes')
 app.use('/auth', authRoutes)
+
+const favoritesRoutes = require('./routes/favorites.routes')
+app.use('/favorites', favoritesRoutes)
+
+
 
 
 
