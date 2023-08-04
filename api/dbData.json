@@ -1,0 +1,259 @@
+{
+    "sports": [
+      {
+        "id": 1,
+        "name": "Archery",
+        "location": "Paris",
+        "venue": "Invalides",
+        "image": "URL_DA_IMAGEM_ARCHERY",
+        "favoriteSports": []
+      },
+      {
+        "id": 2,
+        "name": "Artistic Gymnastics",
+        "location": "Paris",
+        "venue": "Bercy Arena",
+        "image": "URL_DA_IMAGEM_ARTISTIC_GYMNASTICS",
+        "favoriteSports": []
+      },
+      {
+        "id": 3,
+        "name": "Artistic Swimming",
+        "location": "Île-de-France",
+        "venue": "Aquatic Center - Saint Denis",
+        "image": "URL_DA_IMAGEM_ARTISTIC_SWIMMING",
+        "favoriteSports": []
+      },
+      {
+        "id": 4,
+        "name": "Athletics",
+        "location": "Île-de-France",
+        "venue": "Stade de France - Saint-Denis",
+        "image": "URL_DA_IMAGEM_ATHLETICS"
+      },
+      {
+        "id": 5,
+        "name": "Badminton",
+        "location": "Paris",
+        "venue": "Porte de la Chapelle Arena",
+        "image": "URL_DA_IMAGEM_BADMINTON"
+      },
+      {
+        "id": 6,
+        "name": "Basketball",
+        "location": "Paris",
+        "venue": "Bercy Arena",
+        "image": "URL_DA_IMAGEM_BASKETBALL"
+      },
+      {
+        "id": 7,
+        "name": "Basketball 3x3",
+        "location": "Paris",
+        "venue": "Le Concorde",
+        "image": "URL_DA_IMAGEM_BASKETBALL_3X3"
+      },
+      {
+        "id": 8,
+        "name": "Beach Volleyball",
+        "location": "Paris",
+        "venue": "Eiffel Tower Stadium",
+        "image": "URL_DA_IMAGEM_BEACH_VOLLEYBALL"
+      },
+      {
+        "id": 9,
+        "name": "BMX Freestyle",
+        "location": "Paris",
+        "venue": "Le Concorde",
+        "image": "URL_DA_IMAGEM_BMX_FREESTYLE"
+      },
+      {
+        "id": 10,
+        "name": "Boxing",
+        "location": "Paris",
+        "venue": "Roland-Garros Stadium",
+        "image": "URL_DA_IMAGEM_BOXING"
+      },
+      {
+        "id": 11,
+        "name": "Breaking",
+        "location": "Paris",
+        "venue": "Le Concorde",
+        "image": "URL_DA_IMAGEM_BREAKING"
+      },
+      {
+        "id": 12,
+        "name": "Canoe Flatwater",
+        "location": "Île-de-France",
+        "venue": "Vaires-sur-Marne Nautical Stadium",
+        "image": "URL_DA_IMAGEM_CANOE_FLATWATER"
+      },
+      {
+        "id": 13,
+        "name": "Canoe Slalom",
+        "location": "Île-de-France",
+        "venue": "Vaires-sur-Marne Nautical Stadium",
+        "image": "URL_DA_IMAGEM_CANOE_SLOALOM"
+      },
+      {
+        "id": 14,
+        "name": "Climbing",
+        "location": "Île-de-France",
+        "venue": "Le Bourget",
+        "image": "URL_DA_IMAGEM_CLIMBING"
+      },
+      {
+        "id": 15,
+        "name": "Cycling BMX Racing",
+        "location": "Île-de-France",
+        "venue": "Montigny-le-Bretonneux",
+        "image": "URL_DA_IMAGEM_CYCLING_BMX_RACING"
+      },
+      {
+        "id": 16,
+        "name": "Cycling Mountain Bike",
+        "location": "Île-de-France",
+        "venue": "Elancourt Hill",
+        "image": "URL_DA_IMAGEM_CYCLING_MOUNTAIN_BIKE"
+      },
+      {
+        "id": 17,
+        "name": "Cycling Track",
+        "location": "Île-de-France",
+        "venue": "Montigny-le-Bretonneux",
+        "image": "URL_DA_IMAGEM_CYCLING_TRACK"
+      },
+      {
+        "id": 18,
+        "name": "Diving",
+        "location": "Île-de-France",
+        "venue": "Aquatic Center - Saint Denis",
+        "image": "URL_DA_IMAGEM_DIVING"
+      },
+      {
+        "id": 19,
+        "name": "Equestrian",
+        "location": "Île-de-France",
+        "venue": "Versailles Palace",
+        "image": "URL_DA_IMAGEM_EQUESTRIAN"
+      },
+      {
+        "id": 20,
+        "name": "Fencing",
+        "location": "Paris",
+        "venue": "Grand Palais",
+        "image": "URL_DA_IMAGEM_FENCING"
+      },
+      {
+        "id": 21,
+        "name": "Football",
+        "location": "France",
+        "venue": "Le Beaujoire Stadium - Nantes",
+        "image": "URL_DA_IMAGEM_FOOTBALL"
+      },
+      {
+        "id": 22,
+        "name": "Golf",
+        "location": "Île-de-France",
+        "venue": "Saint-Quentin-en-Yvelines",
+        "image": "URL_DA_IMAGEM_GOLF"
+      },
+      {
+        "id": 23,
+        "name": "Handball",
+        "location": "Paris",
+        "venue": "South Paris Arena",
+        "image": "URL_DA_IMAGEM_HANDBALL"
+      },
+      {
+        "id": 24,
+        "name": "Hockey",
+        "location": "Île-de-France",
+        "venue": "Yves-du-Manoir Stadium - Colombes",
+        "image": "URL_DA_IMAGEM_HOCKEY"
+      },
+      {
+        "id": 25,
+        "name": "Judo",
+        "location": "Paris",
+        "venue": "Champ-de-Mars Arena",
+        "image": "URL_DA_IMAGEM_JUDO"
+      },
+      {
+        "id": 26,
+        "name": "Marathon Swimming",
+        "location": "Paris",
+        "venue": "Alexandre III Bridge",
+        "image": "URL_DA_IMAGEM_MARATHON_SWIMMING"
+      },
+      {
+        "id": 27,
+        "name": "Modern Pentathlon",
+        "location": "Île-de-France",
+        "venue": "North Paris Arena - Villepinte",
+        "image": "URL_DA_IMAGEM_MODERN_PENTATHLON"
+      },
+      {
+        "id": 28,
+        "name": "Rhythmic Gymnastics",
+        "location": "Paris",
+        "venue": "Porte de la Chapelle Arena",
+        "image": "URL_DA_IMAGEM_RHYTHMIC_GYMNASTICS"
+      },
+      {
+        "id": 29,
+        "name": "Rowing",
+        "location": "Île-de-France",
+        "venue": "Vaires-sur-Marne Nautical Stadium",
+        "image": "URL_DA_IMAGEM_ROWING"
+      },
+      {
+        "id": 30,
+        "name": "Rugby Sevens",
+        "location": "Île-de-France",
+        "venue": "Stade de France - Saint-Denis",
+        "image": "URL_DA_IMAGEM_RUGBY_SEVENS"
+      },
+      {
+        "id": 31,
+        "name": "Sailing",
+        "location": "France",
+        "venue": "Marseille Marina",
+        "image": "URL_DA_IMAGEM_SAILING"
+      },
+      {
+        "id": 32,
+        "name": "Shooting",
+        "location": "France",
+        "venue": "Chateauroux Shooting Centre",
+        "image": "URL_DA_IMAGEM_SHOOTING"
+      },
+      {
+        "id": 33,
+        "name": "Skateboarding",
+        "location": "Paris",
+        "venue": "Le Concorde",
+        "image": "URL_DA_IMAGEM_SKATEBOARDING"
+      },
+      {
+        "id": 34,
+        "name": "Surfing",
+        "location": "Teahupo'o wave (Tahiti)",
+        "image": "URL_DA_IMAGEM_SURFING"
+      },
+      {
+        "id": 35,
+        "name": "Swimming",
+        "location": "Île-de-France",
+        "venue": "Paris La Défense Arena - Nanterre",
+        "image": "URL_DA_IMAGEM_SWIMMING"
+      },
+      {
+        "id": 36,
+        "name": "Table Tennis",
+        "location": "Paris",
+        "venue": "South Paris Arena",
+        "image": "URL_DA_IMAGEM_TABLE_TENNIS"
+      }
+    ]
+  }
+  
