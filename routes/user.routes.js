@@ -1,28 +1,41 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const User = require('../models/User.model');
-const { isAuthenticated } = require('../middlewares/jwt.middleware');
+const bcrypt = require("bcryptjs");
+const User = require("../models/User.model");
+const { isAuthenticated } = require("../middlewares/jwt.middleware");
+const { v4: uuidv4 } = require("uuid");
+
+// GET all users
+router.get("/", async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+    res.json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+});
 
 // POST route to create a new user
-router.post('/users', async (req, res) => {
-  const payload = req.body; // { email: 'someEmail', password: '1234', userName: 'JohnDoe' }
+router.post("/user", async (req, res) => {
+  const payload = req.body;
 
   try {
     const salt = bcrypt.genSaltSync(13);
     const passwordHash = bcrypt.hashSync(payload.password, salt);
 
+    const userId = uuidv4();
+
     const newUser = await User.create({
+      id: userId,
       email: payload.email,
       password: passwordHash,
       userName: payload.userName,
+      image: payload.image,
     });
 
     // You may choose to sign a token here for user authentication if needed
-    // ...
-
-    res.status(201).json({ message: 'User created', user: newUser });
+    res.status(201).json({ message: "User created", user: newUser });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -30,10 +43,10 @@ router.post('/users', async (req, res) => {
 });
 
 // GET route to fetch a specific user by ID
-router.get('/users/:id', isAuthenticated, async (req, res) => {
+router.get("/user/:id", isAuthenticated, async (req, res) => {
   try {
     const userId = req.params.id;
-    const user = await User.findById(userId).select('-password');
+    const user = await User.findById(userId).select("-password");
     res.json(user);
   } catch (error) {
     console.log(error);
@@ -42,15 +55,15 @@ router.get('/users/:id', isAuthenticated, async (req, res) => {
 });
 
 // PUT route to update a specific user by ID
-router.put('/users/:id', isAuthenticated, async (req, res) => {
+router.put("/user/:id", isAuthenticated, async (req, res) => {
   try {
     const userId = req.params.id;
-    const payload = req.body; // { email: 'newEmail', userName: 'NewName', photo: 'newPhotoURL' }
+    const payload = req.body; // { email: 'newEmail', userName: 'NewName', image: 'newPhotoURL' }
 
     // Check if the user exists
     const existingUser = await User.findById(userId);
     if (!existingUser) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Update the user fields
@@ -60,7 +73,7 @@ router.put('/users/:id', isAuthenticated, async (req, res) => {
 
     await existingUser.save();
 
-    res.json({ message: 'User updated', user: existingUser });
+    res.json({ message: "User updated", user: existingUser });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
@@ -68,30 +81,19 @@ router.put('/users/:id', isAuthenticated, async (req, res) => {
 });
 
 // DELETE route to delete a specific user by ID
-router.delete('/users/:id', isAuthenticated, async (req, res) => {
+router.delete("/user/:id", isAuthenticated, async (req, res) => {
   try {
     const userId = req.params.id;
 
     // Check if the user exists
     const existingUser = await User.findById(userId);
     if (!existingUser) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     await existingUser.remove();
 
-    res.json({ message: 'User deleted' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json(error);
-  }
-});
-
-// Rota para buscar todos os usuários
-router.get('/users', async (req, res) => {
-  try {
-    const users = await User.find().select('-password');
-    res.json(users);
+    res.json({ message: "User deleted" });
   } catch (error) {
     console.log(error);
     res.status(500).json(error);
