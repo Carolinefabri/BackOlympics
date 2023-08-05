@@ -17,13 +17,12 @@ const idToMongoIdMap = sportsData.sports.reduce((acc, sport) => {
 router.get("/", async (req, res) => {
   try {
     const favorites = await Favorite.find();
-    res.json(favorites);
+    res.json(favorites); // Envia os dados como JSON na resposta
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Error getting favorites" });
   }
 });
-
 // Route to create a favorite
 router.post('/', async (req, res) => {
   try {

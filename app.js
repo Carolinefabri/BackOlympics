@@ -10,6 +10,16 @@ const loggerMiddleware = require("./middlewares/loggerMiddleware");
 
 const { getSports } = require("./api/dbData.json");
 
+
+
+// Configuração do CORS
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5174'); // Permite acesso apenas a partir do domínio do frontend
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE'); // Permite os métodos GET, POST, PUT e DELETE
+    next();
+  });
+
+
 require("./config")(app);
 
 // 👇 Start handling routes here
