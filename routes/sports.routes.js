@@ -7,7 +7,7 @@ const SportData = require ('../api/dbData.json');
 
 
 // Route to get all sports with restaurant suggestions
-router.get('/sports', async (req, res) => {
+router.get('/', async (req, res) => {
   try {
 console.log("esta ceeeeerto");
     res.json(SportData);
@@ -15,7 +15,6 @@ console.log("esta ceeeeerto");
     res.status(500).json({ error: "Error getting sports" });
   }
 });
-
 
 
 // Route to get an individual sport by ID
@@ -28,13 +27,7 @@ router.get('/:id', async (req, res) => {
 
   
 });
-// Route to get an individual sport by name 
-router.get('/name/:name', async (req, res) => {
-  const sportName = req.params.name;
-  const filterSports = SportData.sports.filter(sport => sport.name == sportName);
-  console.log('Filtering sports by name:', sportName);
-  res.json(filterSports);
-});
+
 
 
 module.exports = router;

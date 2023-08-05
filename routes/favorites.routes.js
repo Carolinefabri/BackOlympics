@@ -5,6 +5,7 @@ const router = express.Router();
 const Favorite = require('../models/Favorite.model');
 const Sport = require('../models/Sport.model');
 const sportsData = require('../api/dbData.json');
+const uploader = require('../middlewares/cloudinary.config.js');
 
 // Get the mapping between JSON id and MongoDB _id
 const idToMongoIdMap = sportsData.sports.reduce((acc, sport) => {
@@ -12,13 +13,14 @@ const idToMongoIdMap = sportsData.sports.reduce((acc, sport) => {
   return acc;
 }, {});
 
-router.get('/', async (req, res) => {
+// Route to get all favorites
+router.get("/", async (req, res) => {
   try {
-    const favorites = await Favorite.find().populate('sport');
-    console.log('Favorites:', favorites); 
+    const favorites = await Favorite.find();
     res.json(favorites);
   } catch (error) {
-    res.status(500).json({ error: 'Error getting favorites' });
+    console.log(error);
+    res.status(500).json({ error: "Error getting favorites" });
   }
 });
 

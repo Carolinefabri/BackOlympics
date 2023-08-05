@@ -3,8 +3,7 @@ const { Schema, model } = require("mongoose");
 const userSchema = new Schema(
   {
     id: {
-      type: String, // You can change this to the appropriate data type for your user IDs
-      required: [true, "User ID is required"],
+      type: String, 
       unique: true,
       trim: true,
     },
@@ -19,8 +18,7 @@ const userSchema = new Schema(
       required: [true, "Email is required"],
       unique: true,
       trim: true,
-      lowercase: true,
-      match: [/^\S+@\S+\.\S+$/, "Please use a valid email address."],
+      
     },
     password: {
       type: String,
@@ -35,6 +33,7 @@ const userSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: "Favorite",
       },
+      
     ],
   },
   {

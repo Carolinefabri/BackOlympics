@@ -2,12 +2,13 @@ const express = require('express');
 const router = express.Router();
 const sportsRoutes = require('./sports.routes');
 const favoriteRoutes = require('./favorites.routes'); 
-const authRoutes = require('./auth.routes');
+const userRoutes = require('./user.routes');
 
+router.use('/user', userRoutes); 
 router.use('/sports', sportsRoutes);
-router.use('/Favorites', favoriteRoutes); 
+router.use('/favorites', favoriteRoutes); 
 
-router.use('/auth', authRoutes);
+
 
 router.get("/", (req, res, next) => {
   res.json("All good in here - vai CORINTHIANS");
