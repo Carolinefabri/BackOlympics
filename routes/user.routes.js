@@ -17,7 +17,7 @@ router.get("/", async (req, res) => {
 });
 
 // POST route to create a new user
-router.post("/user", async (req, res) => {
+router.post("/", async (req, res) => {
   const payload = req.body;
 
   try {

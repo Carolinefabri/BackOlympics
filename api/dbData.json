@@ -5,7 +5,7 @@
         "name": "Archery",
         "location": "Paris",
         "venue": "Invalides",
-        "image": "URL_DA_IMAGEM_ARCHERY",
+        "image": "https://medias.paris2024.org/uploads/2023/02/PARIS-2024-VISUALS-PICTOGRAMMES-ARCHERY-1-1.jpeg",
         "favoriteSports": []
       },
       {
@@ -13,7 +13,7 @@
         "name": "Artistic Gymnastics",
         "location": "Paris",
         "venue": "Bercy Arena",
-        "image": "URL_DA_IMAGEM_ARTISTIC_GYMNASTICS",
+        "image": "",
         "favoriteSports": []
       },
       {
