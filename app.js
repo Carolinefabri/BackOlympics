@@ -21,13 +21,6 @@ app.use('/auth', authRoutes)
 const favoritesRoutes = require('./routes/favorites.routes')
 app.use('/favorites', favoritesRoutes)
 
-
-
-
-
-
-
-
 const userRoutes = require("./routes/user.routes");
 app.use("/user", userRoutes);
 
