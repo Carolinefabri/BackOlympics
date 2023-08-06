@@ -32,9 +32,14 @@ const upload = multer({ storage: storage });
 
 // Defina as rotas aqui
 router.get('/all', isAuthenticated, async (req, res) => {
-  res.json("Hello from /user route");
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error fetching users' });
+  }
 });
-
 // Exporte o router
 module.exports = router;
 
