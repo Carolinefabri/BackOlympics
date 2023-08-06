@@ -25,9 +25,14 @@ const sportSchema = new Schema({
   favoriteSports: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Favorite' // <-- Add a reference to the 'Favorite' model
+      ref: 'Favorite',
     }
-  ]
+  ],
+ 
+  date: {
+    type: Schema.Types.Mixed,
+    required: true,
+  },
 },
 {
   timestamps: true

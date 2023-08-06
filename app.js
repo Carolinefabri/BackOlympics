@@ -3,28 +3,28 @@ require("./db");
 
 const express = require("express");
 const app = express();
-
-const { getSports } = require("./api/dbData.json");
+const routes = require("./routes/index.routes");
+const loggerMiddleware = require("./middlewares/loggerMiddleware");
 
 require("./config")(app);
 
-// 👇 Start handling routes here
-const sportsRoutes = require("./routes/sports.routes");
-app.use("/sports", sportsRoutes);
+// Rotas
+app.use("/", routes);
 
-const indexRoutes = require("./routes/index.routes");
-app.use("/api", indexRoutes);
+// Rota de erro para 404 Not Found
+app.use((req, res) => {
+  res.status(404).send('404 Not Found');
+});
 
-const authRoutes = require('./routes/auth.routes')
-app.use('/auth', authRoutes)
+// Middleware de tratamento de erro
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong' });
+});
 
-const favoritesRoutes = require('./routes/favorites.routes')
-app.use('/favorites', favoritesRoutes)
+// Aplicar o loggerMiddleware em todas as rotas
+app.use(loggerMiddleware);
 
-const userRoutes = require("./routes/user.routes");
-app.use("/user", userRoutes);
-
-// ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
 module.exports = app;
