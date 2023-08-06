@@ -39,7 +39,7 @@ router.get('/all', async (req, res) => {
 // Exporte o router
 module.exports = router;
 
-router.post('/signup', upload.single('profilePicture'), async (req, res) => {
+
 router.post('/signup', upload.single('profilePicture'), async (req, res) => {
   const payload = req.body;
   console.log("Payload received:", payload);
