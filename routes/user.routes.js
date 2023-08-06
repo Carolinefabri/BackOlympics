@@ -43,16 +43,7 @@ router.get('/all', isAuthenticated, async (req, res) => {
 // Exporte o router
 module.exports = router;
 
-// GET route to get all users
-router.get('/all', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Error fetching users' });
-  }
-});
+
 
 router.post('/signup', upload.single('profilePicture'), async (req, res) => {
   const payload = req.body;
