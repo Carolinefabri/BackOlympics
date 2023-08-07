@@ -4,7 +4,7 @@ require("./db");
 const express = require("express");
 const app = express();
 const routes = require("./routes/index.routes");
-const loggerMiddleware = require("./middlewares/loggerMiddleware");
+
 
 require("./config")(app);
 
@@ -22,8 +22,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Something went wrong' });
 });
 
-// Aplicar o loggerMiddleware em todas as rotas
-app.use(loggerMiddleware);
+
 
 require("./error-handling")(app);
 

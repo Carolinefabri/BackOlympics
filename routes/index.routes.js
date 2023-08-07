@@ -3,12 +3,12 @@ const router = express.Router();
 const sportsRoutes = require('./sports.routes');
 const favoriteRoutes = require('./favorites.routes'); 
 const userRoutes = require('./user.routes');
-const notesRoutes = require('./notes.routes');
+
 
 router.use('/user', userRoutes); 
 router.use('/sports', sportsRoutes);
 router.use('/favorites', favoriteRoutes); 
-router.use('/notes', notesRoutes);
+
 
 router.get("/", (req, res, next) => {
   res.json("All good in here - vai CORINTHIANS");
