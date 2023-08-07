@@ -1,10 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const Favorite = require('../models/favorite.model');
+const Favorite = require('../models/Favorite.model');
 const User = require ('../models/User.model');
 const Sport = require ('../models/Sport.model');
 
 
+router.get('/:userId', async (req, res) => {
+  
+  const { userId } = req.params;
+  
+
+  try {
+    const userFavorites = await Favorite.find({ user:userId}).populate("sport")
+    console.log(userFavorites)
+    res.json(userFavorites);
+  } catch (error) {
+    console.error('Error fetching user favorites:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
 
 // Route to get all favorites
 
@@ -13,15 +27,15 @@ router.get('/:id/addfavorite/:userId', async (req, res) => {
   console.log("tentando ", id , userId)
   try {
     const sports= await Sport.findOne({id:id})
-    const updateUser = await User.findByIdAndUpdate(userId,{$push:{favorites:sports._id}}, {new:true})
+    const updateFavorite = await Favorite.create({user: userId, sport:sports})
+    const updateUser = await User.findByIdAndUpdate(userId,{$push:{favorites:updateFavorite}}, {new:true})
+
     res.status(202).json(updateUser);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error getting favorites' });
   }
 });
-
-
 
 
 
