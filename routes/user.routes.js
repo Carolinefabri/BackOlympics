@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d', // Token expires in 1 day
     });
 
-    res.json({ message: 'Login successful', token });
+    res.json({ message: 'Login successful', token, user });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Error during login' });
@@ -118,5 +118,14 @@ router.get('/verify', isAuthenticated, async(req, res) => {
   currentUser.password = '****'
   res.status(200).json({message: 'Token is valid', currentUser})
 })
+
+
+/* Brian a partir daqui */
+
+
+
+
+
+
 
 module.exports = router;

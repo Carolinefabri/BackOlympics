@@ -30,7 +30,12 @@ const sportSchema = new Schema({
       type: Boolean,
       default: false,
     },
-},
+    mapa: {
+      type: String,
+    
+    },
+  },
+ 
 {
   timestamps: true
 }
