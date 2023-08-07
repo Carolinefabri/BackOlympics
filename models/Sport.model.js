@@ -18,22 +18,24 @@ const sportSchema = new Schema({
     type: String,
     required: true,
   },
+  date: {
+    type: String, // Ou o tipo de dado adequado para datas, como Date
+    required: true,
+  },
   image: {
     type: String,
     required: true,
   },
-  favoriteSports: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Favorite',
-    }
-  ],
- 
-  date: {
-    type: Schema.Types.Mixed,
-    required: true,
+    isFavorited: {
+      type: Boolean,
+      default: false,
+    },
+    mapa: {
+      type: String,
+    
+    },
   },
-},
+ 
 {
   timestamps: true
 }

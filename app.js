@@ -5,11 +5,15 @@ const express = require("express");
 const app = express();
 const routes = require("./routes/index.routes");
 const loggerMiddleware = require("./middlewares/loggerMiddleware");
+const bodyParser = require("body-parser");
+
 
 require("./config")(app);
 
 // Rotas
 app.use("/", routes);
+
+
 
 // Rota de erro para 404 Not Found
 app.use((req, res) => {
@@ -17,14 +21,16 @@ app.use((req, res) => {
 });
 
 // Middleware de tratamento de erro
-app.use((err, req, res, next) => {
+app.use(err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong' });
-});
+  } );
 
-// Aplicar o loggerMiddleware em todas as rotas
-app.use(loggerMiddleware);
 
+const userRoutes = require("./routes/user.routes");
+app.use("/user", userRoutes);
+
+// ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
 module.exports = app;
