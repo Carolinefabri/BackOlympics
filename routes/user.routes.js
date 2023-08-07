@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,7 +11,7 @@ const { isAuthenticated } = require('../middlewares/jwt.middleware');
 
 const router = express.Router();
 
-// Criar o diretório 'uploads' se não existir
+/// Criar o diretório 'uploads' se não existir
 const uploadDir = './uploads';
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
@@ -40,17 +41,32 @@ router.get('/all', isAuthenticated, async (req, res) => {
     res.status(500).json({ error: 'Error fetching users' });
   }
 });
-// Exporte o router
-module.exports = router;
+
 
 // GET route to get all users
-router.get('/all', async (req, res) => {
+// Route to get all users (Protected route, requires authentication)
+router.get('/all', isAuthenticated, async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Error fetching users' });
+  }
+});
+
+// Route to get a user by username (Protected route, requires authentication)
+router.get('/username/:username', isAuthenticated, async (req, res) => {
+  const username = req.params.username;
+  try {
+    const user = await User.findOne({ userName: username });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.status(200).json(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error fetching user' });
   }
 });
 
@@ -84,9 +100,10 @@ router.post('/signup', upload.single('profilePicture'), async (req, res) => {
   }
 });
 
-/* POST route to login */
+
+// Route to log in a user and generate a token
 router.post('/login', async (req, res) => {
-  const payload = req.body; 
+  const payload = req.body;
 
   try {
     const user = await User.findOne({ email: payload.email });
@@ -103,11 +120,12 @@ router.post('/login', async (req, res) => {
       expiresIn: '1d', // Token expires in 1 day
     });
 
-    res.json({ message: 'Login successful', token });
+    res.json({ message: 'Login successful', token, user }); // Send the token and user data in the response
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Error during login' });
   }
 });
+
 
 module.exports = router;
