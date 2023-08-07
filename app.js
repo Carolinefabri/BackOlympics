@@ -3,46 +3,28 @@ require("./db");
 
 const express = require("express");
 const app = express();
+const routes = require("./routes/index.routes");
 const loggerMiddleware = require("./middlewares/loggerMiddleware");
-const sportsRoutes = require("./routes/sports.routes");
-const favoritesRoutes = require('./routes/favorites.routes')
-const userRoutes = require("./routes/user.routes");
-const { getSports } = require("./api/dbData.json");
 
 require("./config")(app);
 
-// Apply the loggerMiddleware to all routes
-app.use(loggerMiddleware);
+// Rotas
+app.use("/", routes);
 
-// Mount the custom routes
-app.use("/sports", sportsRoutes);
-app.use('/favoritesport', favoritesRoutes);
-app.use("/user", userRoutes);
-
-// Routes
-app.get('/', (req, res) => {
-    res.send('Hello, this is the homepage!');
-});
-
-app.get('/about', (req, res) => {
-    res.send('This is the about page.');
-});
-
-// Catch-all route for 404 Not Found
+// Rota de erro para 404 Not Found
 app.use((req, res) => {
-    res.status(404).send('404 Not Found');
+  res.status(404).send('404 Not Found');
 });
 
-// Error handling middleware
+// Middleware de tratamento de erro
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong' });
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong' });
 });
 
-// Apply the loggerMiddleware to all routes
+// Aplicar o loggerMiddleware em todas as rotas
 app.use(loggerMiddleware);
 
-// ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
 
 module.exports = app;
