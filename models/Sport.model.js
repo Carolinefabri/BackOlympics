@@ -34,12 +34,6 @@ const sportSchema = new Schema({
       type: String,
     
     },
-    comments: {
-      text: {
-        type: String,
-      },
-    }
-    
   },
  
 {

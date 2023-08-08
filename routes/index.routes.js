@@ -10,7 +10,6 @@ router.use('/sports', sportsRoutes);
 router.use('/favorites', favoriteRoutes);
 
 
-
 router.get("/", (req, res, next) => {
   res.json("All good in here - vai CORINTHIANS ");
 });
