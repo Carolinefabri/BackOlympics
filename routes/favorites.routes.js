@@ -5,6 +5,7 @@ const router = express.Router();
 const Favorite = require('../models/Favorite.model');
 const User = require ('../models/User.model');
 const Sport = require ('../models/Sport.model');
+const mongoose = require('mongoose');
 
 
 router.get('/:userId', async (req, res) => {
@@ -95,102 +96,64 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Route to remove a sport from favorites
-router.delete('/:id', async (req, res) => {
+// Rota para adicionar um comentário a um esporte favorito
+
+router.post('/:favoriteId/comments', async (req, res) => {
+  const { favoriteId } = req.params;
+  const { text } = req.body;
+
   try {
-    const { id } = req.params;
-
-    // Verificar se todas as informações necessárias estão presentes na requisição
-    if (!comment || !gameDate) {
-      return res.status(400).json({ error: 'Informações obrigatórias faltando' });
+    // Verifique se o favoriteId é uma string válida de ObjectId
+    if (!mongoose.Types.ObjectId.isValid(favoriteId)) {
+      return res.status(400).json({ error: 'ID inválido do esporte favorito' });
     }
 
-    // Encontrar o favorito pelo ID
-    const favorite = await Favorite.findById(favoriteId);
+    // Converta o favoriteId em um ObjectId
+    const favoriteObjectId = new mongoose.Types.ObjectId(favoriteId);
+
+    // Encontre o esporte favorito pelo ID
+    const favorite = await Favorite.findById(favoriteObjectId);
+
     if (!favorite) {
-      return res.status(404).json({ error: 'Favorito não encontrado' });
+      return res.status(404).json({ error: 'Esporte favorito não encontrado' });
     }
 
-    // Adicionar um novo comentário ao favorito
-    favorite.comments.push({
-      text: comment,
-      date: gameDate,
-    });
-
-    // Salvar as alterações no banco de dados
+    // Adicione o comentário ao esporte favorito
+    favorite.comments.push({ text });
     await favorite.save();
 
-    res.json(favorite);
+    res.status(201).json(favorite.comments[favorite.comments.length - 1]);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao adicionar comentário ao favorito' });
+    console.error('Error adding comment:', error);
+    res.status(500).json({ error: 'Erro ao adicionar comentário' });
   }
 });
 
-// Route to update a comment in a favorite
-router.put('/:favoriteId/comments/:commentId', async (req, res) => {
+
+
+
+
+
+
+// Rota para deletar um esporte favorito
+router.delete('/:favoriteId/removefavorite/:userId', async (req, res) => {
+  const { favoriteId, userId } = req.params;
+
   try {
-    const { comment, gameDate } = req.body;
-    const { favoriteId, commentId } = req.params;
+    // Verifique se o esporte favorito existe e pertence ao usuário
+    const favorite = await Favorite.findOneAndDelete({ _id: favoriteId, user: userId });
 
-    // Verificar se todas as informações necessárias estão presentes na requisição
-    if (!comment || !gameDate) {
-      return res.status(400).json({ error: 'Informações obrigatórias faltando' });
-    }
-
-    // Encontrar o favorito pelo ID
-    const favorite = await Favorite.findById(favoriteId);
     if (!favorite) {
-      return res.status(404).json({ error: 'Favorito não encontrado' });
+      return res.status(404).json({ error: 'Esporte favorito não encontrado' });
     }
 
-    // Encontrar o comentário pelo ID no favorito
-    const commentIndex = favorite.comments.findIndex((c) => c._id.toString() === commentId);
-    if (commentIndex === -1) {
-      return res.status(404).json({ error: 'Comentário não encontrado' });
-    }
+    // Remova o esporte favorito da lista de favoritos do usuário
+    await User.findByIdAndUpdate(userId, { $pull: { favorites: favoriteId } });
 
-    // Atualizar o comentário no favorito
-    favorite.comments[commentIndex].text = comment;
-    favorite.comments[commentIndex].date = gameDate;
-
-    // Salvar as alterações no banco de dados
-    await favorite.save();
-
-    res.json(favorite);
+    res.status(204).send();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Erro ao atualizar comentário no favorito' });
-  }
-});
-
-// Route to delete a comment from a favorite
-router.delete('/:favoriteId/comments/:commentId', async (req, res) => {
-  try {
-    const { favoriteId, commentId } = req.params;
-
-    // Encontrar o favorito pelo ID
-    const favorite = await Favorite.findById(favoriteId);
-    if (!favorite) {
-      return res.status(404).json({ error: 'Favorito não encontrado' });
-    }
-
-    // Encontrar o comentário pelo ID no favorito
-    const commentIndex = favorite.comments.findIndex((c) => c._id.toString() === commentId);
-    if (commentIndex === -1) {
-      return res.status(404).json({ error: 'Comentário não encontrado' });
-    }
-
-    // Remover o comentário do favorito
-    favorite.comments.splice(commentIndex, 1);
-
-    // Salvar as alterações no banco de dados
-    await favorite.save();
-
-    res.json(favorite);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao deletar comentário do favorito' });
+    res.status(500).json({ error: 'Erro ao remover esporte favorito' });
   }
 });
 
