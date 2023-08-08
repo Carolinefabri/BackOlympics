@@ -23,7 +23,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: 'Something went wrong' });
-  }) ;
+});
 
 
 const userRoutes = require("./routes/user.routes");
