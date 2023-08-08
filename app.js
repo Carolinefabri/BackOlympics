@@ -13,11 +13,6 @@ require("./config")(app);
 app.use("/", routes);
 
 
-// Rota de erro para 404 Not Found
-app.use((req, res) => {
-  res.status(404).send('404 Not Found');
-});
-
 
 const userRoutes = require("./routes/user.routes");
 app.use("/user", userRoutes);
