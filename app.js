@@ -13,7 +13,6 @@ require("./config")(app);
 app.use("/", routes);
 
 
-
 const userRoutes = require("./routes/user.routes");
 app.use("/user", userRoutes);
 
