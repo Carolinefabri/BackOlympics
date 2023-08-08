@@ -23,7 +23,7 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-// Route to get all favorites
+
 
 router.get('/:id/addfavorite/:userId', async (req, res) => {
   const { id,userId} = req.params;
@@ -64,40 +64,33 @@ router.get('/:userId/favorites', async (req, res) => {
   }
 });
 
-// Route to add a favorite
-router.post('/', async (req, res) => {
+
+// Rota para adicionar um comentário a um esporte favorito
+router.get('/:favoriteId/comments', async (req, res) => {
+  const { favoriteId } = req.params;
+
   try {
-    const { sportId, comment, gameDate } = req.body;
-
-    // Find the sport by ID or name
-    const sport = await Sport.findOne().or([{ _id: sportId }, { name: sportId }]);
-
-    if (!sport) {
-      return res.status(404).json({ error: 'Esporte não encontrado' });
+    // Verifique se o favoriteId é uma string válida de ObjectId
+    if (!mongoose.Types.ObjectId.isValid(favoriteId)) {
+      return res.status(400).json({ error: 'ID inválido do esporte favorito' });
     }
 
-    const newFavorite = new Favorite({
-      user: req.user._id, // Assuming you have implemented user authentication and stored the user object in req.user
-      sport: sport._id,
-      comments: [
-        {
-          text: comment,
-          date: gameDate,
-        },
-      ],
-    });
+    // Encontre o esporte favorito pelo ID
+    const favorite = await Favorite.findById(favoriteId);
 
-    await newFavorite.save();
+    if (!favorite) {
+      return res.status(404).json({ error: 'Esporte favorito não encontrado' });
+    }
 
-    res.status(201).json(newFavorite);
+    // Retorne os comentários do esporte favorito
+    res.json(favorite.comments);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao criar favorito' });
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: 'Erro ao obter comentários' });
   }
 });
 
 // Rota para adicionar um comentário a um esporte favorito
-
 router.post('/:favoriteId/comments', async (req, res) => {
   const { favoriteId } = req.params;
   const { text } = req.body;
@@ -108,18 +101,15 @@ router.post('/:favoriteId/comments', async (req, res) => {
       return res.status(400).json({ error: 'ID inválido do esporte favorito' });
     }
 
-    // Converta o favoriteId em um ObjectId
-    const favoriteObjectId = new mongoose.Types.ObjectId(favoriteId);
-
     // Encontre o esporte favorito pelo ID
-    const favorite = await Favorite.findById(favoriteObjectId);
+    const favorite = await Favorite.findById(favoriteId);
 
     if (!favorite) {
       return res.status(404).json({ error: 'Esporte favorito não encontrado' });
     }
 
     // Adicione o comentário ao esporte favorito
-    favorite.comments.push({ text });
+    favorite.comments.push(text);
     await favorite.save();
 
     res.status(201).json(favorite.comments[favorite.comments.length - 1]);
@@ -128,6 +118,7 @@ router.post('/:favoriteId/comments', async (req, res) => {
     res.status(500).json({ error: 'Erro ao adicionar comentário' });
   }
 });
+
 
 
 
