@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const favoriteSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model (if you have one)
+    ref: 'User', 
   },
   sport: {
     type: mongoose.Schema.Types.ObjectId,
