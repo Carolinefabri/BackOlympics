@@ -26,10 +26,10 @@ router.get('/:userId', async (req, res) => {
 
 
 router.get('/:id/addfavorite/:userId', async (req, res) => {
-  const { id,userId} = req.params;
-  console.log("tentando ", id , userId)
+  console.log("tentando ", id, typeof id, userId)
   try {
-    const sports= await Sport.findOne({id:id})
+    const sports= await Sport.findOne({id: parseInt(id)})
+    console.log({sports})
     const updateFavorite = await Favorite.create({user: userId, sport:sports})
     const updateUser = await User.findByIdAndUpdate(userId,{$push:{favorites:updateFavorite}}, {new:true})
 
