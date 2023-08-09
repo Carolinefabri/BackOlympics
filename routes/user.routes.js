@@ -193,7 +193,7 @@ router.post("/logout", isAuthenticated, (req, res) => {
   });
 });
 
-module.exports = router;
+
 
 
 
