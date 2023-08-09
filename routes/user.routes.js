@@ -43,17 +43,6 @@ router.get("/all", isAuthenticated, async (req, res) => {
 });
 
 
-// GET route to get all users
-// Route to get all users (Protected route, requires authentication)
-router.get('/all', isAuthenticated, async (req, res) => {
-  try {
-    const users = await User.find();
-    res.status(200).json(users);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Error fetching users' });
-  }
-});
 
 // Route to get a user by username (Protected route, requires authentication)
 router.get('/username/:username', isAuthenticated, async (req, res) => {
