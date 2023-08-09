@@ -5,7 +5,7 @@ const favoriteRoutes = require('./favorites.routes');
 const userRoutes = require('./user.routes');
 
 
-router.use('/user', userRoutes); 
+
 router.use('/sports', sportsRoutes);
 router.use('/favorites', favoriteRoutes);
 
