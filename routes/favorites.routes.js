@@ -89,20 +89,23 @@ router.get('/:favoriteId/comments', async (req, res) => {
 router.post('/:favoriteId/comments', async (req, res) => {
   const { favoriteId } = req.params;
   const { text } = req.body;
+  console.log(text)
+  
 
   try {
+    
 
-    const sports = await Sport.findOne({id:favoriteId});
-    const favorite = await Favorite.findOne({sport:sports._id});
-    console.log(sports)
+    /* const sports = await Sport.findById(favoriteId);
+    console.log(sports) */
+
+    const favorite = await Favorite.findByIdAndUpdate(favoriteId,{$push:{comments:{text}}},{new:true});
+   
     console.log(favorite)
 
     if (!favorite) {
       return res.status(404).json({ error: 'Esporte favorito não encontrado' });
     }
 
-    favorite.comments.push({text});
-    await favorite.save();
 
     res.status(201).json(favorite.comments[favorite.comments.length - 1]);
   } catch (error) {
@@ -110,6 +113,43 @@ router.post('/:favoriteId/comments', async (req, res) => {
     res.status(500).json({ error: 'Erro ao adicionar comentário' });
   }
 });
+
+
+
+// Rota para atualizar um comentário de um esporte favorito
+router.put('/:favoriteId/comments/:commentId', async (req, res) => {
+  const { favoriteId, commentId } = req.params;
+  const { text } = req.body;
+
+  try {
+    const favorite = await Favorite.findById(favoriteId);
+
+    if (!favorite) {
+      return res.status(404).json({ error: 'Esporte favorito não encontrado' });
+    }
+
+    const commentToUpdate = favorite.comments.id(commentId);
+
+    if (!commentToUpdate) {
+      return res.status(404).json({ error: 'Comentário não encontrado' });
+    }
+
+    commentToUpdate.text = text;
+    await favorite.save();
+
+    res.status(200).json(commentToUpdate);
+  } catch (error) {
+    console.error('Error updating comment:', error);
+    res.status(500).json({ error: 'Erro ao atualizar comentário' });
+  }
+});
+
+
+
+
+
+
+
 
 
 
