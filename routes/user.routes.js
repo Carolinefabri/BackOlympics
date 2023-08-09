@@ -142,5 +142,4 @@ router.get('/verify', isAuthenticated, async(req, res) => {
 
 
 
-
 module.exports = router;
