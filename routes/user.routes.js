@@ -140,7 +140,60 @@ router.get('/verify', isAuthenticated, async(req, res) => {
 /* Brian a partir daqui */
 
 
+//Delete account
+router.delete("/delete/:userId", isAuthenticated, async (req, res) => {
+  const userId = req.params.userId;
 
+  try {
+    const deletedUser = await User.findByIdAndDelete({ _id: userId });
+
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error deleting user" });
+  }
+});
+
+//Update account
+router.post("/edit/:user", isAuthenticated, async (req, res) => {
+  const userId = req.payload.userId;
+  const {userName, password, email, image} = req.body;
+
+  const salt = bcrypt.genSaltSync(13);
+  const passwordHash = bcrypt.hashSync(password, salt);
+
+  try {
+    const updateUser = await User.findByIdAndUpdate(userId, {userName, password: passwordHash, email, image}, {
+      new: true,
+    });
+
+    if (!updateUser) {
+      return res.status(404).json({ error: "No user found" });
+    }
+
+    res.status(200).json({ message: "User updated successfully" });
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ error: "Error updating user" });
+  }
+});
+
+//Logout route
+router.post("/logout", isAuthenticated, (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.clearCookie("authToken");
+    res.clearCookie("user");
+  });
+});
+
+module.exports = router;
 
 
 
