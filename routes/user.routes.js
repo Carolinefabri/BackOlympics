@@ -159,15 +159,19 @@ router.delete("/delete/:userId", isAuthenticated, async (req, res) => {
 //Update account
 router.post("/edit/:user", isAuthenticated, async (req, res) => {
   const userId = req.payload.userId;
-  const {userName, password, email, image} = req.body;
+  const { userName, password, email, image } = req.body;
 
   const salt = bcrypt.genSaltSync(13);
   const passwordHash = bcrypt.hashSync(password, salt);
 
   try {
-    const updateUser = await User.findByIdAndUpdate(userId, {userName, password: passwordHash, email, image}, {
-      new: true,
-    });
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      { userName, password: passwordHash, email, image },
+      {
+        new: true,
+      }
+    );
 
     if (!updateUser) {
       return res.status(404).json({ error: "No user found" });
@@ -182,12 +186,15 @@ router.post("/edit/:user", isAuthenticated, async (req, res) => {
 
 //Logout route
 router.post("/logout", isAuthenticated, (req, res) => {
+  res.clearCookie("authToken");
+  res.clearCookie("user");
+
   req.session.destroy((err) => {
     if (err) {
-      return next(err);
+      console.error("Error destroying session:", err);
+      return res.status(500).send("Internal Server Error");
     }
-    res.clearCookie("authToken");
-    res.clearCookie("user");
+    return res.status(200).send("Logged out successfully");
   });
 });
 
