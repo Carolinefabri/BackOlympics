@@ -26,12 +26,18 @@ router.get('/:userId', async (req, res) => {
 
 
 router.get('/:id/addfavorite/:userId', async (req, res) => {
-  console.log("tentando ", id, typeof id, userId)
+  const { id, userId } = req.params; 
+  console.log("tentando ", id, typeof id, userId);
+  
   try {
-    const sports= await Sport.findOne({id: parseInt(id)})
-    console.log({sports})
-    const updateFavorite = await Favorite.create({user: userId, sport:sports})
-    const updateUser = await User.findByIdAndUpdate(userId,{$push:{favorites:updateFavorite}}, {new:true})
+    const sports = await Sport.findOne({ id: parseInt(id) });
+    console.log({ sports });
+    const updateFavorite = await Favorite.create({ user: userId, sport: sports });
+    const updateUser = await User.findByIdAndUpdate(
+      userId,
+      { $push: { favorites: updateFavorite } },
+      { new: true }
+    );
 
     res.status(202).json(updateUser);
   } catch (error) {
@@ -39,6 +45,7 @@ router.get('/:id/addfavorite/:userId', async (req, res) => {
     res.status(500).json({ error: 'Error getting favorites' });
   }
 });
+
 
 
 
